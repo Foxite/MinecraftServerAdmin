@@ -17,9 +17,13 @@ namespace MinecraftServerAdmin {
 		// This method gets called by the runtime. Use this method to add services to the container.
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services) {
-			services.AddMinecraftRcon(Configuration);
+			services.AddControllersWithViews();
+			
+			services.AddMinecraft()
+				.AddRcon(Configuration)
+				.AddRconSharp(Configuration);
 
-			var authenticationConfig = Configuration.GetValue<AuthenticationConfig>(nameof(AuthenticationConfig));
+			var authenticationConfig = Configuration.GetSection(nameof(AuthenticationConfig)).Get<AuthenticationConfig>();
 			
 			services
 				.AddAuthentication(options => {
@@ -38,6 +42,8 @@ namespace MinecraftServerAdmin {
 					options.ClientSecret = authenticationConfig.ClientSecret;
 					options.Scope.Add(authenticationConfig.Scope);
 				});
+
+			services.AddAuthorization();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

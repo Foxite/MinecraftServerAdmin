@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Minecraft server admin</title>
+</head>
+<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/common.js"></script>
+<script src="js/playerlist.js"></script>
+<script src="js/whitelist.js"></script>
+<script src="js/banlist.js"></script>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <header>
+                <h1 style="text-align: center;">ik_ihe Minecraft server admin</h1>
+            </header>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <section>
+                <h2>Online players</h2>
+                <form>
+                    <select id="playerlist" multiple style="width: 100%; height: 12em;">
+                    </select>
+                </form>
+                <script>
+                updateOnlinePlayerList();
+                setInterval(updateOnlinePlayerList, 5000);
+                </script>
+            </section>
+        </div>
+        <div class="col-4">
+            <section>
+                <h2>Whitelist</h2>
+                <form>
+                    <select id="whitelist" multiple style="width: 100%; height: 12em;" oninput="inputWhitelist(this)">
+                    </select>
+                    <div style="width: 100%; display: flex;">
+                        <input type="text" name="whitelist_player_name" id="whitelist_player_name" placeholder="Player name" style="flex-grow: 1;" />
+                        <button type="button" id="btn_whitelist_user" style="margin-right: 0.2em;" onclick="btnWhitelistUser(this)">Add</button>
+                        <button type="button" id="btn_unwhitelist_user" style="margin-right: 0.2em;" onclick="btnUnwhitelistUser(this)">Remove</button>
+                    </div>
+                </form>
+                <script>
+                updateWhitelist()
+                setInterval(updateWhitelist, 5000);
+                </script>
+            </section>
+        </div>
+        <div class="col-4">
+            <section>
+                <h2>Banlist</h2>
+                <form>
+                    <select id="banlist" multiple style="width: 100%; height: 12em;" oninput="inputBanlist(this)">
+                        <option>Note: not implemented yet due to a minecraft bug</option>
+                    </select>
+                    <div style="width: 100%;">
+                        <div class="col">
+                            <div class="row">
+                                <div style="display: flex;">
+                                    <input type="text" name="ban_player_name" id="ban_player_name" placeholder="Player name" style="flex-grow: 1;"/>
+                                    <button type="button" id="btn_ban_user" style="margin-right: 0.2em; float: right;" onclick="btnBanUser(this)">Ban</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div style="display: flex;">
+                                    <input type="text" name="ban_reason" id="ban_reason" placeholder="Ban reason" style="flex-grow: 1;"/>
+                                    <button type="button" id="btn_unban_user" style="margin-right: 0.2em; float: right;" onclick="btnUnbanUser(this)">Unban</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <script>
+                //updateBanlist()
+                //setInterval(updateBanlist, 5000);
+                </script>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <section>
+                <h2>Chat</h2>
+                <form>
+                    <select id="chat" multiple style="width: 100%; height: 12em;">
+                        <option>Note: the ability to watch the chat has not been implemented yet.</option>
+                    </select>
+                    <div style="width: 100%; display: flex;">
+                        <input type="text" name="chattext" placeholder="Execute command" style="flex-grow: 1;" />
+                        <button id="btn_sendchat" style="margin-left: 0.2em;">Send</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+</html>

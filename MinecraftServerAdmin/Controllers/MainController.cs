@@ -1,8 +1,12 @@
+using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MinecraftServerAdmin.Services;
 
 namespace MinecraftServerAdmin.Controllers {
+	[Route("/")]
+	[Authorize]
 	public class MainController : Controller {
 		private readonly MinecraftService m_Service;
 		

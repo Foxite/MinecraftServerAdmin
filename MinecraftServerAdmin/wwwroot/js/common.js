@@ -22,7 +22,12 @@ function makeRequest(method, url, data) {
                 statusText: xhr.statusText
             });
         };
-        xhr.send(data);
+        if (data !== undefined) {
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send(JSON.stringify(data));
+        } else {
+            xhr.send();
+        }
     });
 }
 
@@ -31,5 +36,16 @@ function apiCall(method, endpoint, data) {
 }
 
 function executeCommand(command) {
-    return apiCall("DELETE", "Whitelist/" + Player);
+    return apiCall("POST", "Command", command);
+}
+
+async function updatePlayerList(getList, listElement) {
+    listElement.innerHTML = "";
+
+    for (let playerName of await getList()) {
+        const option = document.createElement("option");
+        option.innerText = playerName;
+        option.id = "playerlist_item_" + playerName;
+        listElement.add(option);
+    }
 }
