@@ -34,7 +34,14 @@ namespace MinecraftServerAdmin.Services.Rcon {
 			} catch (SocketException ex) {
 				m_Logger.LogError(ex, "Socket exception, attempting to reconnect");
 				await ConnectAsync();
-				return await ExecuteCommandAsync(command); // RWL supports recursive write locking
+				// TODO Check if this actually works
+				// I wrote this when I was still using ReaderWriterLock, which supports recursion.
+				// However it quickly became apparent that RWL does not work when you `await` in between entering and exiting,
+				//  because the thread that enters is not the same as the one that exits.
+				// SemaphoreSlim is "await-aware" in that you can `await` in between entering and exiting and it totally works.
+				// However, the documentation seems to make no mention of this pattern being supported.
+				// If it is not supported we may have to go back to using a goto
+				return await ExecuteCommandAsync(command);
 			} finally {
 				m_Lock.Release();
 			}
