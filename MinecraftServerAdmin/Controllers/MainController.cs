@@ -69,8 +69,7 @@ namespace MinecraftServerAdmin.Controllers {
 		[HttpPost("Command")]
 		public async Task<IActionResult> ExecuteCommand([FromBody] string command) {
 			return Forbid(); // TODO different levels of authorization, based on oauth2 claim
-			await m_Service.ExecuteCommand(command);
-			return Ok();
+			return Content(await m_Service.ExecuteCommand(command));
 		}
 	}
 }

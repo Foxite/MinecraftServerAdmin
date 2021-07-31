@@ -2,11 +2,39 @@
 
 <html>
 <head>
-    <title>Minecraft server admin</title> @* TODO title from config *@
+    <title>Minecraft server admin</title>
 </head>
+<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="js/common.js"></script>
+<script src="js/playerlist.js"></script>
 <body>
-<div>
-    @* TODO bootstrap or something *@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <header>
+                <h1>ik_ihe Minecraft server admin</h1>
+            </header>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <section>
+                <h2>Online players</h2>
+                <form>
+                    <select id="playerlist">
+                    </select>
+                </form>
+            </section>
+        </div>
+        <div class="col-8">
+            <section>
+                <h2>Chat</h2>
+                <p>Unavailable</p>
+            </section>
+        </div>
+    </div>
 </div>
 </body>
 </html>
