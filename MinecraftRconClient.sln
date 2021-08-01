@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftServerAdmin", "MinecraftServerAdmin\MinecraftServerAdmin.csproj", "{69E149D5-FE74-4D88-8F4F-14DEDCEF5EA4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{573E8015-FAAD-4E69-B03B-23A386075B1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

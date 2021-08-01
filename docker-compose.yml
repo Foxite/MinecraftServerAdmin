@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  minecraft.admin:
+    build:
+      context: .
+      dockerfile: MinecraftServerAdmin/Dockerfile
+    ports:
+      - 5100:5100
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+
+
