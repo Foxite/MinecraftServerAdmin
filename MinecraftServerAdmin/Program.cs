@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,12 @@ namespace MinecraftServerAdmin {
 			Host.CreateDefaultBuilder(args)
 				.ConfigureWebHostDefaults(webBuilder => {
 					webBuilder.UseStartup<Startup>();
+					webBuilder.UseKestrel(serverOptions => {
+						serverOptions.Listen(IPAddress.Any, 443, listenOptions => {
+							listenOptions.UseHttps("/etc/ssl/private/corsac.nl.pfx");
+						});
+						serverOptions.AddServerHeader = false;
+					});
 				});
 	}
 }
