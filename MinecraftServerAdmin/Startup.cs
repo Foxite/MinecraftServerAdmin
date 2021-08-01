@@ -46,7 +46,7 @@ namespace MinecraftServerAdmin {
 				});
 
 			services.AddAuthorization(options => {
-				options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(Configuration.GetValue<string>("RequiredRole", "MinecraftServerAdmin")));
+				options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(authenticationConfig.RequiredRole));
 				options.DefaultPolicy = options.GetPolicy("RequireAdministratorRole")!;
 			});
 
