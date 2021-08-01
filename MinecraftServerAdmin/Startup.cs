@@ -66,7 +66,7 @@ namespace MinecraftServerAdmin {
 			app.UseMiddleware<PublicFacingUrlMiddleware>(
 				Configuration.GetValue<string>("PublicFacingUrl", "https://localhost:5001"),
 				Configuration.GetValue<string>("PathBase", "/")
-			gi);
+			);
 
 			app.UseStaticFiles();
 			app.UseRouting();
