@@ -47,7 +47,6 @@ namespace MinecraftServerAdmin {
 
 			services.AddAuthorization(options => {
 				options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(authenticationConfig.RequiredRole));
-				options.DefaultPolicy = options.GetPolicy("RequireAdministratorRole")!;
 			});
 
 			services.PostConfigure<KestrelServerOptions>(kso => {

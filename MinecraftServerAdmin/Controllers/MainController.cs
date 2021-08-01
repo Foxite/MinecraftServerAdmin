@@ -6,7 +6,7 @@ using MinecraftServerAdmin.Services;
 
 namespace MinecraftServerAdmin.Controllers {
 	[Route("/")]
-	[Authorize]
+	[Authorize("RequireAdministratorRole")]
 	public class MainController : Controller {
 		private readonly MinecraftService m_Service;
 		
