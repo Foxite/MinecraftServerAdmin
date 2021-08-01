@@ -5,6 +5,10 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <RestoreSources>https://www.myget.org/F/foxite/api/v3/index.json;https://api.nuget.org/v3/index.json</RestoreSources>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="Foxite.Common" Version="1.1.4" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.8" />
