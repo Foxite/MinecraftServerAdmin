@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MinecraftServerAdmin.Helpers;
 
 namespace MinecraftServerAdmin {
 	public class Startup {
@@ -44,6 +46,10 @@ namespace MinecraftServerAdmin {
 				});
 
 			services.AddAuthorization();
+
+			services.PostConfigure<KestrelServerOptions>(kso => {
+				kso.ListenAnyIP(Configuration.GetValue<int>("Port", 5100));
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +59,8 @@ namespace MinecraftServerAdmin {
 			} else {
 				app.UseExceptionHandler("/Home/Error");
 			}
+
+			app.UseMiddleware<PathBaseMiddleware>(Configuration.GetValue<string>("PathBase", "/"));
 
 			app.UseStaticFiles();
 			app.UseRouting();
