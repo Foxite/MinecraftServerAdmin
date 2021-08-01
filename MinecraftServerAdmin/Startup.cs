@@ -74,8 +74,7 @@ namespace MinecraftServerAdmin {
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints => {
-				endpoints.MapDefaultControllerRoute()
-					.RequireAuthorization();
+				endpoints.MapDefaultControllerRoute();
 			});
 		}
 	}
