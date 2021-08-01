@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using MinecraftServerAdmin.Helpers;
 
 namespace MinecraftServerAdmin {
@@ -26,7 +28,7 @@ namespace MinecraftServerAdmin {
 				.AddRconSharp(Configuration);
 
 			var authenticationConfig = Configuration.GetSection(nameof(AuthenticationConfig)).Get<AuthenticationConfig>();
-			
+
 			services
 				.AddAuthentication(options => {
 					options.DefaultScheme = "Cookies";
@@ -43,10 +45,19 @@ namespace MinecraftServerAdmin {
 					options.ClientId = authenticationConfig.ClientId;
 					options.ClientSecret = authenticationConfig.ClientSecret;
 					options.Scope.Add(authenticationConfig.Scope);
+					
+					options.Scope.Add("roles");
+					options.ClaimActions.MapJsonKey("role", "role", "role");
+					options.TokenValidationParameters = new TokenValidationParameters() {
+						NameClaimType = "name",
+						RoleClaimType = "role"
+					};
 				});
 
 			services.AddAuthorization(options => {
-				options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(authenticationConfig.RequiredRole));
+				options.AddPolicy("RequireAdminRole", policy => {
+					policy.RequireRole(authenticationConfig.RequiredRole);
+				});
 			});
 
 			services.PostConfigure<KestrelServerOptions>(kso => {
@@ -63,8 +74,7 @@ namespace MinecraftServerAdmin {
 			}
 
 			app.UseMiddleware<PublicFacingUrlMiddleware>(
-				Configuration.GetValue<string>("PublicFacingUrl", "https://localhost:5001"),
-				Configuration.GetValue<string>("PathBase", "/")
+				Configuration.GetValue<string>("PublicFacingUrl", "https://localhost:5001")
 			);
 
 			app.UseStaticFiles();

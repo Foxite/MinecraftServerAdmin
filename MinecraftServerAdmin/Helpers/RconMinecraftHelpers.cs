@@ -1,8 +1,6 @@
-using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using MinecraftServerAdmin.Services;
 using MinecraftServerAdmin.Services.Rcon;
-using RconSharp;
 
 namespace Microsoft.Extensions.DependencyInjection {
 	public static class RconMinecraftHelpers {
