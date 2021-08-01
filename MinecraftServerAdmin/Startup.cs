@@ -45,7 +45,10 @@ namespace MinecraftServerAdmin {
 					options.Scope.Add(authenticationConfig.Scope);
 				});
 
-			services.AddAuthorization();
+			services.AddAuthorization(options => {
+				options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(Configuration.GetValue<string>("RequiredRole", "MinecraftServerAdmin")));
+				options.DefaultPolicy = options.GetPolicy("RequireAdministratorRole")!;
+			});
 
 			services.PostConfigure<KestrelServerOptions>(kso => {
 				kso.ListenAnyIP(Configuration.GetValue<int>("Port", 5100));
